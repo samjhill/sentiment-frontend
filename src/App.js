@@ -27,13 +27,16 @@ class App extends Component {
       news: {},
       comments: [],
       deltas: {},
-      env: 'prod',
+      env: 'test',
       slideshowMode: true,
     };
 
     this.url = 'http://localhost:8081';
-    if(this.state.env == 'prod') {
+    if(this.state.env == 'test') {
       this.url = 'http://192.168.2.83:8081';
+    }
+    if(this.state.env == 'prod') {
+      this.url = 'http://localhost:8081';
     }
   }
 
@@ -44,7 +47,7 @@ class App extends Component {
           this.setState({tickers: tickers});
            tickers.map(function(ticker, index){
             if(ticker.type == 'btcusd') {
-              document.title = '$' + ticker.price + ' - CoinTools';
+              document.title = '$' + ticker.price + ' - Distributed.Love';
             }
           });
 
@@ -165,11 +168,12 @@ class App extends Component {
 
             <Slider {...sliderSettings}>
               <div>
-                <NewsFeed data={this.state.news} />
-              </div>
-              <div>
-                <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
                 <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+                <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
+              </div>
+
+              <div>
+                <NewsFeed data={this.state.news} />
               </div>
 
               <div>
