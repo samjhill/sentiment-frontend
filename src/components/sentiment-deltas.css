@@ -1,0 +1,39 @@
+.deltas h2 {
+  color: white;
+}
+
+.deltas {
+  float: left;
+  max-width: 450px;
+  display: inline-block;
+}
+
+.delta {
+  display: block;
+}
+
+.delta .subName {
+  font-size: 1.5rem;
+}
+
+.delta .diff {
+  font-size: 1.5rem;
+  float: right;
+  margin-top: 5px;
+}
+
+.delta .fa {
+    font-size: 2rem;
+}
+
+.delta .fa-frown-o {
+  color: red;
+}
+
+.delta .fa-meh-o {
+  color: orange;
+}
+
+.delta .fa-smile-o {
+  color: green;
+}

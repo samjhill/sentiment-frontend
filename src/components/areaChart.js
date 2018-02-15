@@ -8,11 +8,11 @@ export default class FilledAreaChart extends Component {
 
 		this.state = {
 			colors: [
-				'#400000',
-				'#2e5785',
-				'#00dcff',
-				'#ccff00',
-				'#ff00bc',
+				'#ff71ce',
+				'#01cdfe',
+				'#05ffa1',
+				'#b967ff',
+				'#fffb96',
 				'#02213c',
 				'tomato',
 				'bisque',
@@ -24,19 +24,22 @@ export default class FilledAreaChart extends Component {
 	render() {
 		var labels = [];
 		if(this.props.data.length > 0) {
-				labels = Object.keys(this.props.data[0]);
+				delete this.props.data[0][this.props.sortBy];
+        labels = Object.keys(this.props.data[0]);
+        console.log(labels)
 		}
+
 
 		return (
 			<div className="chart-container">
 				<h2>{this.props.title}</h2>
-        <AreaChart width={600} height={600} data={this.props.data}
+        <AreaChart width={1000} height={700} data={this.props.data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <defs>
             {
               labels.map( (label, index) => {
                 return (
-                  <linearGradient id={"color-"+label} x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id={"color-"+index} key={index} x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor={this.state.colors[index]} stopOpacity={0.8}/>
                     <stop offset="95%" stopColor={this.state.colors[index]}  stopOpacity={0}/>
                   </linearGradient>
@@ -46,15 +49,12 @@ export default class FilledAreaChart extends Component {
           </defs>
           <XAxis dataKey={this.props.sortBy || 'date'} />
           <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           {
             labels.map( (label, index) => {
-              return (<Area type="monotone" dataKey={label} stroke={this.state.colors[index]} fillOpacity={1} fill={"url(#color-"+label+")"} />)
+              return (<Area type="monotone" key={index} dataKey={label} stroke={this.state.colors[index]} fillOpacity={1} fill={"url(#color-"+index+")"} />)
             })
           }
-          <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-          <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
         </AreaChart>
 			</div>
 		);

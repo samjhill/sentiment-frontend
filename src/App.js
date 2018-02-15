@@ -4,6 +4,13 @@ import logo from './logo.svg';
 import Ticker from './components/ticker';
 import Chart from './components/chart';
 import AreaChart from './components/areaChart';
+import Comments from './components/comments';
+import Slider from 'react-slick';
+import Toggle from 'react-toggle';
+import Delta from './components/sentiment-delta';
+import NewsFeed from './components/newsFeed';
+import 'slick-carousel/slick/slick.css';
+import "react-toggle/style.css";
 
 class App extends Component {
   constructor(props) {
@@ -16,12 +23,17 @@ class App extends Component {
       sentiment: [],
       coinbase: [],
       subreddits: [],
-      env: 'dev'
+      trends: [],
+      news: {},
+      comments: [],
+      deltas: {},
+      env: 'prod',
+      slideshowMode: true,
     };
 
     this.url = 'http://localhost:8081';
     if(this.state.env == 'prod') {
-      this.url = 'http://192.168.2.59:8081';
+      this.url = 'http://192.168.2.83:8081';
     }
   }
 
@@ -52,25 +64,42 @@ class App extends Component {
 
     axios.get(this.url + "/sentiment")
           .then(json => {
-            const sentiment = Object.keys(json.data.seven).map((label, index) => {
-              json.data.seven[label].date = label;
-              return json.data.seven[label];
+            const sentiment = Object.keys(json.data.thirty).map((label, index) => {
+              json.data.thirty[label].date = label;
+              return json.data.thirty[label];
             });
 
             this.setState({sentiment: sentiment});
           }).catch(ex => {
             console.log('parsing failed', ex)
           })
-  }
 
-  fetchCoinbaseUsers() {
-    axios.get(this.url + "/coinbase/users")
-        .then(json => {
-          const coinbase = json.data;
-          this.setState({coinbase: coinbase});
-        }).catch(ex => {
-          console.log('parsing failed', ex)
-        })
+    axios.get(this.url + "/sentiment/comment")
+          .then(json => {
+            const comments = json.data;
+
+            this.setState({comments: comments});
+          }).catch(ex => {
+            console.log('parsing failed', ex)
+          })
+
+    axios.get(this.url + "/sentiment/deltas")
+          .then(json => {
+            const deltas = json.data;
+
+            this.setState({deltas: deltas});
+          }).catch(ex => {
+            console.log('parsing failed', ex)
+          })
+
+    axios.get(this.url + "/news")
+          .then(json => {
+            const news = json.data;
+
+            this.setState({news: news});
+          }).catch(ex => {
+            console.log('parsing failed', ex)
+          })
   }
 
   fetchRedditActiveUsers() {
@@ -81,7 +110,16 @@ class App extends Component {
             return json.data[label];
           });
           this.setState({subreddits: subreddits});
-          console.log(subreddits);
+        }).catch(ex => {
+          console.log('parsing failed', ex)
+        })
+  }
+
+  fetchTrends() {
+    axios.get(this.url + "/trends")
+        .then(json => {
+          const trends = json.data;
+          this.setState({trends: trends});
         }).catch(ex => {
           console.log('parsing failed', ex)
         })
@@ -89,29 +127,100 @@ class App extends Component {
 
   componentDidMount() {
     this.fetchData();
-    this.fetchCoinbaseUsers();
     this.fetchRedditActiveUsers();
+    this.fetchTrends();
     setInterval(() => {this.fetchData()}, this.refreshTime * 1000);
-    setInterval(() => {this.fetchCoinbaseUsers()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchRedditActiveUsers()}, this.refreshTime * 10000);
+    setInterval(() => {this.fetchTrends()}, this.refreshTime * 10000);
   }
 
   render() {
-    return (
-        <div className="App">
-          <div className="tickers">
-            {this.state.tickers.map((item, index) => (
-              <Ticker item={item} key={index}/>
-            ))}
+    var sliderSettings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 25000
+    };
+
+
+    if(this.state.slideshowMode == true) {
+      return (
+          <div className="App">
+            <label className="toggle">
+              <Toggle
+                defaultChecked={this.state.slideshowMode==true}
+                onChange={() => {this.setState({slideshowMode: !this.state.slideshowMode})}}
+              />
+              <span>View in Slideshow Mode</span>
+            </label>
+
+            <div className="tickers">
+              {this.state.tickers.map((item, index) => (
+                <Ticker item={item} key={index}/>
+              ))}
+            </div>
+
+            <Slider {...sliderSettings}>
+              <div>
+                <NewsFeed data={this.state.news} />
+              </div>
+              <div>
+                <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
+                <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+              </div>
+
+              <div>
+                <Chart title="Active Users by Subreddit" data={this.state.subreddits} sortBy='date' />
+              </div>
+
+              <div>
+                <AreaChart title="Search Trends" data={this.state.trends} sortBy='formattedTime'/>
+              </div>
+
+              <div>
+                <Comments comments={this.state.comments} />
+              </div>
+            </Slider>
           </div>
+        );
+    }
+    else {
+      return (
+          <div className="App">
+            <label className="toggle">
+              <Toggle
+                defaultChecked={this.state.slideshowMode==true}
+                onChange={() => {this.setState({slideshowMode: !this.state.slideshowMode})}}
+              />
+              <span>View in Slideshow Mode</span>
+            </label>
 
-          <Chart title="Active Users by Subreddit" data={this.state.subreddits} sortBy='date' />
+            <div className="tickers">
+              {this.state.tickers.map((item, index) => (
+                <Ticker item={item} key={index}/>
+              ))}
+            </div>
 
-          <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+            <NewsFeed data={this.state.news} />
 
-          <AreaChart title="Coinbase: New Users (dummy data ends 11/16)" data={this.state.coinbase} sortBy='datetime'/>
-        </div>
-      );
+            <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
+
+            <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+
+            <Chart title="Active Users by Subreddit" data={this.state.subreddits} sortBy='date' />
+
+            <AreaChart title="Search Trends" data={this.state.trends} sortBy='formattedTime'/>
+
+            <Comments comments={this.state.comments} />
+
+          </div>
+        );
+    }
+
+
   }
 }
 
