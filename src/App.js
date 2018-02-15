@@ -27,7 +27,7 @@ class App extends Component {
       news: {},
       comments: [],
       deltas: {},
-      env: 'test',
+      env: 'prod',
       slideshowMode: true,
     };
 
@@ -36,7 +36,7 @@ class App extends Component {
       this.url = 'http://192.168.2.83:8081';
     }
     if(this.state.env == 'prod') {
-      this.url = 'http://localhost:8081';
+      this.url = 'http://67.205.191.68:8081';
     }
   }
 
