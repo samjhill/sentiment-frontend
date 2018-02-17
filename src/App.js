@@ -9,6 +9,10 @@ import Slider from 'react-slick';
 import Toggle from 'react-toggle';
 import Delta from './components/sentiment-delta';
 import NewsFeed from './components/newsFeed';
+import { Button } from 'react-bootstrap';
+import { ToggleButton } from 'react-bootstrap';
+import { ToggleButtonGroup } from 'react-bootstrap';
+import { ButtonToolbar } from 'react-bootstrap';
 import 'slick-carousel/slick/slick.css';
 import "react-toggle/style.css";
 
@@ -27,8 +31,9 @@ class App extends Component {
       news: {},
       comments: [],
       deltas: {},
-      env: 'test',
+      env: 'prod',
       slideshowMode: true,
+      timeFrame: localStorage.getItem('timeFrame')
     };
 
     this.url = 'http://localhost:8081';
@@ -67,9 +72,9 @@ class App extends Component {
 
     axios.get(this.url + "/sentiment")
           .then(json => {
-            const sentiment = Object.keys(json.data.thirty).map((label, index) => {
-              json.data.thirty[label].date = label;
-              return json.data.thirty[label];
+            const sentiment = Object.keys(json.data[this.state.timeFrame]).map((label, index) => {
+              json.data[this.state.timeFrame][label].date = label;
+              return json.data[this.state.timeFrame][label];
             });
 
             this.setState({sentiment: sentiment});
@@ -91,15 +96,6 @@ class App extends Component {
             const deltas = json.data;
 
             this.setState({deltas: deltas});
-          }).catch(ex => {
-            console.log('parsing failed', ex)
-          })
-
-    axios.get(this.url + "/news")
-          .then(json => {
-            const news = json.data;
-
-            this.setState({news: news});
           }).catch(ex => {
             console.log('parsing failed', ex)
           })
@@ -128,6 +124,17 @@ class App extends Component {
         })
   }
 
+  fetchNews() {
+    axios.get(this.url + "/news")
+        .then(json => {
+          const news = json.data;
+
+          this.setState({news: news});
+        }).catch(ex => {
+          console.log('parsing failed', ex)
+        })
+  }
+
   componentDidMount() {
     this.fetchData();
     this.fetchRedditActiveUsers();
@@ -135,6 +142,7 @@ class App extends Component {
     setInterval(() => {this.fetchData()}, this.refreshTime * 1000);
     setInterval(() => {this.fetchRedditActiveUsers()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchTrends()}, this.refreshTime * 10000);
+    setInterval(() => {this.fetchTrends()}, this.refreshTime * 20000);
   }
 
   render() {
@@ -165,6 +173,20 @@ class App extends Component {
                 <Ticker item={item} key={index}/>
               ))}
             </div>
+
+            <h2>Time Frame (days)</h2>
+            <ButtonToolbar>
+              <ToggleButtonGroup
+                type="radio"
+                name="changeTimeFrame"
+                onChange={(value) => {localStorage.setItem('timeFrame', value); window.location.reload();}}
+                defaultValue={this.state.timeFrame}
+              >
+                <ToggleButton value={'one'}>1</ToggleButton>
+                <ToggleButton value={'seven'}>7</ToggleButton>
+                <ToggleButton value={'thirty'}>30</ToggleButton>
+              </ToggleButtonGroup>
+            </ButtonToolbar>
 
             <Slider {...sliderSettings}>
               <div>

@@ -5,6 +5,10 @@ body {
   background: #333333;
 }
 
+h2 {
+  color: white;
+}
+
 .tickers {
   width: 100%;
 }

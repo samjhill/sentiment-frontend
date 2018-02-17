@@ -26,7 +26,6 @@ export default class FilledAreaChart extends Component {
 		if(this.props.data.length > 0) {
 				delete this.props.data[0][this.props.sortBy];
         labels = Object.keys(this.props.data[0]);
-        console.log(labels)
 		}
 
 

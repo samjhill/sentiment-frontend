@@ -12,12 +12,6 @@ export default class NewsFeed extends Component {
 	render() {
     var searchTerms = Object.keys(this.props.data);
 
-		if(this.props.data['bitcoin']) {
-			this.props.data['bitcoin'].map((article, i) => {
-				console.log(article);
-			});
-		}
-
 		return (
 				<div className="news-feed">
 					  {searchTerms.map((item, index) => {
