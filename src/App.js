@@ -33,7 +33,7 @@ class App extends Component {
       deltas: {},
       env: 'prod',
       slideshowMode: true,
-      timeFrame: localStorage.getItem('timeFrame')
+      timeFrame: localStorage.getItem('timeFrame') || 'thirty'
     };
 
     this.url = 'http://localhost:8081';
