@@ -139,10 +139,11 @@ class App extends Component {
     this.fetchData();
     this.fetchRedditActiveUsers();
     this.fetchTrends();
+    this.fetchNews();
     setInterval(() => {this.fetchData()}, this.refreshTime * 1000);
     setInterval(() => {this.fetchRedditActiveUsers()}, this.refreshTime * 10000);
-    setInterval(() => {this.fetchTrends()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchTrends()}, this.refreshTime * 20000);
+    setInterval(() => {this.fetchNews()}, this.refreshTime * 10000);
   }
 
   render() {
