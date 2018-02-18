@@ -1,11 +1,13 @@
 .news-feed {
   display: inline-block;
-  background: white;
+  background: none;
 }
 
 .news-item {
   display: block;
   text-decoration: none;
+  background: white;
+  margin-bottom: .75rem;
   color: black;
   padding: .5rem;
 }
