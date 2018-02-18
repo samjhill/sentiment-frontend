@@ -45,6 +45,21 @@ class App extends Component {
     }
   }
 
+  fetchSentiment() {
+    axios.get(this.url + "/sentiment")
+          .then(json => {
+            var numDays = localStorage.getItem('timeFrame');
+            const sentiment = Object.keys(json.data[numDays]).map((label, index) => {
+              json.data[numDays][label].date = label;
+              return json.data[numDays][label];
+            });
+
+            this.setState({sentiment: sentiment});
+          }).catch(ex => {
+            console.log('parsing failed', ex)
+          })
+  }
+
   fetchData() {
     axios.get(this.url + "/localbtc")
         .then(json => {
@@ -69,19 +84,6 @@ class App extends Component {
         }).catch(ex => {
           console.log('parsing failed', ex)
         })
-
-    axios.get(this.url + "/sentiment")
-          .then(json => {
-            var numDays = localStorage.getItem('timeFrame');
-            const sentiment = Object.keys(json.data[numDays]).map((label, index) => {
-              json.data[numDays][label].date = label;
-              return json.data[numDays][label];
-            });
-
-            this.setState({sentiment: sentiment});
-          }).catch(ex => {
-            console.log('parsing failed', ex)
-          })
 
     axios.get(this.url + "/sentiment/comment")
           .then(json => {
@@ -137,10 +139,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchSentiment();
     this.fetchData();
     this.fetchRedditActiveUsers();
     this.fetchTrends();
     this.fetchNews();
+    setInterval(() => {this.fetchSentiment()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchData()}, this.refreshTime * 1000);
     setInterval(() => {this.fetchRedditActiveUsers()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchTrends()}, this.refreshTime * 20000);
@@ -183,7 +187,7 @@ class App extends Component {
                   <ToggleButtonGroup
                     type="radio"
                     name="changeTimeFrame"
-                    onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchData();}}
+                    onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
                     defaultValue={this.state.timeFrame}
                   >
                     <ToggleButton value={'one'}>1</ToggleButton>
@@ -238,7 +242,7 @@ class App extends Component {
               <ToggleButtonGroup
                 type="radio"
                 name="changeTimeFrame"
-                onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchData();}}
+                onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
                 defaultValue={this.state.timeFrame}
               >
                 <ToggleButton value={'one'}>1</ToggleButton>
