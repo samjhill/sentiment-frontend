@@ -1,6 +1,8 @@
 .comments {
-  display: inline;
-  margin: 1rem;
+  margin: 0 auto;
+  display: inline-nlock;
+  width: 75%;
+  min-width: 500px;
   color: white;
 }
 
