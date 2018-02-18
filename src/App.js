@@ -175,22 +175,21 @@ class App extends Component {
               ))}
             </div>
 
-            <h2>Time Frame (days)</h2>
-            <ButtonToolbar>
-              <ToggleButtonGroup
-                type="radio"
-                name="changeTimeFrame"
-                onChange={(value) => {localStorage.setItem('timeFrame', value); window.location.reload();}}
-                defaultValue={this.state.timeFrame}
-              >
-                <ToggleButton value={'one'}>1</ToggleButton>
-                <ToggleButton value={'seven'}>7</ToggleButton>
-                <ToggleButton value={'thirty'}>30</ToggleButton>
-              </ToggleButtonGroup>
-            </ButtonToolbar>
-
             <Slider {...sliderSettings}>
               <div>
+                <h2>Time Frame (days)</h2>
+                <ButtonToolbar>
+                  <ToggleButtonGroup
+                    type="radio"
+                    name="changeTimeFrame"
+                    onChange={(value) => {localStorage.setItem('timeFrame', value); window.location.reload();}}
+                    defaultValue={this.state.timeFrame}
+                  >
+                    <ToggleButton value={'one'}>1</ToggleButton>
+                    <ToggleButton value={'seven'}>7</ToggleButton>
+                    <ToggleButton value={'thirty'}>30</ToggleButton>
+                  </ToggleButtonGroup>
+                </ButtonToolbar>
                 <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
                 <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
               </div>
@@ -233,6 +232,20 @@ class App extends Component {
 
             <NewsFeed data={this.state.news} />
 
+            <h2>Time Frame (days)</h2>
+            <ButtonToolbar>
+              <ToggleButtonGroup
+                type="radio"
+                name="changeTimeFrame"
+                onChange={(value) => {localStorage.setItem('timeFrame', value); window.location.reload();}}
+                defaultValue={this.state.timeFrame}
+              >
+                <ToggleButton value={'one'}>1</ToggleButton>
+                <ToggleButton value={'seven'}>7</ToggleButton>
+                <ToggleButton value={'thirty'}>30</ToggleButton>
+              </ToggleButtonGroup>
+            </ButtonToolbar>
+            
             <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
 
             <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
