@@ -72,9 +72,10 @@ class App extends Component {
 
     axios.get(this.url + "/sentiment")
           .then(json => {
-            const sentiment = Object.keys(json.data[this.state.timeFrame]).map((label, index) => {
-              json.data[this.state.timeFrame][label].date = label;
-              return json.data[this.state.timeFrame][label];
+            var numDays = localStorage.getItem('timeFrame');
+            const sentiment = Object.keys(json.data[numDays]).map((label, index) => {
+              json.data[numDays][label].date = label;
+              return json.data[numDays][label];
             });
 
             this.setState({sentiment: sentiment});
@@ -182,7 +183,7 @@ class App extends Component {
                   <ToggleButtonGroup
                     type="radio"
                     name="changeTimeFrame"
-                    onChange={(value) => {localStorage.setItem('timeFrame', value); window.location.reload();}}
+                    onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchData();}}
                     defaultValue={this.state.timeFrame}
                   >
                     <ToggleButton value={'one'}>1</ToggleButton>
@@ -237,7 +238,7 @@ class App extends Component {
               <ToggleButtonGroup
                 type="radio"
                 name="changeTimeFrame"
-                onChange={(value) => {localStorage.setItem('timeFrame', value); window.location.reload();}}
+                onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchData();}}
                 defaultValue={this.state.timeFrame}
               >
                 <ToggleButton value={'one'}>1</ToggleButton>
@@ -245,7 +246,7 @@ class App extends Component {
                 <ToggleButton value={'thirty'}>30</ToggleButton>
               </ToggleButtonGroup>
             </ButtonToolbar>
-            
+
             <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
 
             <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
