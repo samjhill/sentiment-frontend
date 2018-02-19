@@ -45,7 +45,7 @@ export default class LNTips extends React.Component {
     {
         var value = parseInt(this.state.value);
 
-        Axios.get('/getinvoice', {
+        Axios.get('http://67.205.191.68:8081/getinvoice', {
             params: {
                 value: value
             }
@@ -68,7 +68,7 @@ export default class LNTips extends React.Component {
 
     WaitForPayment()
     {
-        Axios.get('/invoicestatus', {
+        Axios.get('http://67.205.191.68:8081/invoicestatus', {
             params: {
                 rhash: this.state.rhash
             }
