@@ -9,10 +9,13 @@ import Slider from 'react-slick';
 import Toggle from 'react-toggle';
 import Delta from './components/sentiment-delta';
 import NewsFeed from './components/newsFeed';
+import Tips from './components/tips';
+
 import { Button } from 'react-bootstrap';
 import { ToggleButton } from 'react-bootstrap';
 import { ToggleButtonGroup } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
+
 import 'slick-carousel/slick/slick.css';
 import "react-toggle/style.css";
 
@@ -215,6 +218,7 @@ class App extends Component {
                 <Comments comments={this.state.comments} />
               </div>
             </Slider>
+            <Tips />
           </div>
         );
     }
