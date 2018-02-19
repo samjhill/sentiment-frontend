@@ -50,6 +50,7 @@ export default class LNTips extends React.Component {
                 value: value
             }
         }).then(result => {
+            result = result.data;
             this.setState({
                 paymentState: PaymentState.PAYMENT_STATE_WAITING_FOR_PAYMENT,
                 invoice: result.data.payment_request,
@@ -73,6 +74,7 @@ export default class LNTips extends React.Component {
                 rhash: this.state.rhash
             }
         }).then(result => {
+            result = result.data;
             if (JSON.parse(result.data) == true)
                 this.setState({paymentState: PaymentState.PAYMENT_STATE_COMPLETED});
             else
