@@ -54,7 +54,7 @@ export default class LNTips extends React.Component {
             this.setState({
                 paymentState: PaymentState.PAYMENT_STATE_WAITING_FOR_PAYMENT,
                 invoice: result.data.payment_request,
-                rhash: RHashArrayToHexString(result.data.r_hash.data)
+                rhash: result.data.r_hash
             });
 
             // Poll for completed payment
@@ -69,7 +69,7 @@ export default class LNTips extends React.Component {
 
     WaitForPayment()
     {
-        Axios.get('http://67.205.191.68:8081/invoicestatus', {
+        Axios.get('http://67.205.191.68:8081/getinvoicestatus', {
             params: {
                 rhash: this.state.rhash
             }
