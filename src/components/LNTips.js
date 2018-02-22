@@ -125,7 +125,7 @@ export default class LNTips extends React.Component {
             case PaymentState.PAYMENT_STATE_COMPLETED:
                 return (
                     <span style={styles.container}>
-                        Got it! Thanks!
+                        Thank you! This really helps!
                         <a href="javascript:void(0)" onClick={event => this.setState({paymentState: PaymentState.PAYMENT_STATE_WAITING_FOR_INPUT})}>Repeat?</a>
                     </span>
                 );
