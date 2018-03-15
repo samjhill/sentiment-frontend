@@ -13,6 +13,8 @@
 .recharts-legend-wrapper {
 }
 .recharts-default-tooltip {
+  background-color: #575757a1 !important;
+  border: 1px solid rgb(77, 77, 77) !important;
 }
 
 .recharts-tooltip-wrapper {
