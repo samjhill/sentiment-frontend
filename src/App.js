@@ -44,7 +44,7 @@ class App extends Component {
       this.url = 'http://192.168.2.83:8081';
     }
     if(this.state.env == 'prod') {
-      this.url = 'http://67.205.191.68:8081';
+      this.url = 'http://distributed.love:8081';
     }
   }
 
