@@ -218,7 +218,6 @@ class App extends Component {
                 <Comments comments={this.state.comments} />
               </div>
             </Slider>
-            <Tips />
           </div>
         );
     }
