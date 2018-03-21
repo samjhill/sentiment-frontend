@@ -70,7 +70,7 @@ class App extends Component {
           this.setState({tickers: tickers});
            tickers.map(function(ticker, index){
             if(ticker.type == 'btcusd') {
-              document.title = '$' + ticker.price + ' - Distributed.Love';
+              document.title = '$' + Math.round(ticker.price) + ' - Distributed.Love';
             }
           });
 
