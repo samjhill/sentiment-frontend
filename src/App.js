@@ -36,7 +36,7 @@ class App extends Component {
       deltas: {},
       env: 'prod',
       slideshowMode: true,
-      timeFrame: localStorage.getItem('timeFrame') || 'thirty'
+      timeFrame: localStorage.getItem('timeFrame') ? 'thirty' : localStorage.getItem('timeFrame')
     };
 
     this.url = 'http://localhost:8081';
