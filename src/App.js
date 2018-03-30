@@ -25,6 +25,8 @@ class App extends Component {
 
     this.refreshTime = '60'; //in seconds
 
+    let tf = localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty';
+
     this.state = {
       tickers: [],
       sentiment: [],
@@ -36,7 +38,7 @@ class App extends Component {
       deltas: {},
       env: 'prod',
       slideshowMode: true,
-      timeFrame: localStorage.getItem('timeFrame') ? 'thirty' : localStorage.getItem('timeFrame')
+      timeFrame: tf
     };
 
     this.url = 'http://localhost:8081';
