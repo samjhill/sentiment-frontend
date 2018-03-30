@@ -198,6 +198,7 @@ class App extends Component {
                     <ToggleButton value={'one'}>1</ToggleButton>
                     <ToggleButton value={'seven'}>7</ToggleButton>
                     <ToggleButton value={'thirty'}>30</ToggleButton>
+                    <ToggleButton value={'all'}>All</ToggleButton>
                   </ToggleButtonGroup>
                 </ButtonToolbar>
                 <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
@@ -253,6 +254,7 @@ class App extends Component {
                 <ToggleButton value={'one'}>1</ToggleButton>
                 <ToggleButton value={'seven'}>7</ToggleButton>
                 <ToggleButton value={'thirty'}>30</ToggleButton>
+                <ToggleButton value={'all'}>All</ToggleButton>
               </ToggleButtonGroup>
             </ButtonToolbar>
 
