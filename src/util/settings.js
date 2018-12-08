@@ -1,30 +1,26 @@
 const defaultSettings = {
-  slideshowMode: {
-    label: 'Slideshow Mode',
-    value: true,
-  },
   showTickers: {
-    label: 'Show Tickers',
+    label: 'Tickers',
     value: false,
   },
   showRedditSentiment: {
-    label: 'Show Reddit Sentiment',
+    label: 'Reddit Sentiment',
     value: true,
   },
   showNewsFeed: {
-    label: 'Show News Feed',
+    label: 'News Feed',
     value: true,
   },
   showRedditActiveUsers: {
-    label: 'Show Reddit Active Users',
+    label: 'Reddit Active Users',
     value: true,
   },
   showSearchTrends: {
-    label: 'Show Search Trends',
+    label: 'Search Trends',
     value: true,
   },
   showRedditComments: {
-    label: 'Show Reddit Comments',
+    label: 'Reddit Comments',
     value: false,
   },
 };

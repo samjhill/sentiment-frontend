@@ -164,7 +164,13 @@ class App extends Component {
     const { settings } = this.state;
 
     const DataFrames = ({ settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments }) => (
-      <Slider>
+      <Slider
+        dots
+        infinite
+        speed={500}
+        autoplay
+        autoplaySpeed={25000}
+        >
         {settings.showRedditSentiment.value  && (
           <div>
             <h2>Time Frame (days)</h2>
@@ -218,13 +224,7 @@ class App extends Component {
     }
 
     var sliderSettings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 25000
+
     };
 
 
