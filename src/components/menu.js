@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import Toggle from 'react-toggle';
-import { loadSettings, saveSetting } from '../util/settings';
 import styled from 'styled-components';
+
+import { loadSettings, saveSetting } from '../util/settings';
+
 
 const StyledSpan = styled.span`
   top: -5px;
