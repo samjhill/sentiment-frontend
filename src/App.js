@@ -169,60 +169,56 @@ class App extends Component {
   }
 
   render() {
-    const dataFrames = () => {
-      const { settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments } = this.state;
-
-      return (
-        <React.Fragment>
-          {settings.showRedditSentiment.value  && (
-            <div>
-              <h2>Time Frame (days)</h2>
-              <ButtonToolbar>
-                <ToggleButtonGroup
-                  type="radio"
-                  name="changeTimeFrame"
-                  onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
-                  defaultValue={timeFrame}
-                >
-                  <ToggleButton value={'one'}>1</ToggleButton>
-                  <ToggleButton value={'seven'}>7</ToggleButton>
-                  <ToggleButton value={'thirty'}>30</ToggleButton>
-                  <ToggleButton value={'all'}>All</ToggleButton>
-                </ToggleButtonGroup>
-              </ButtonToolbar>
-              <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
-              <Delta title="At a Glance" deltas={deltas} tooltip="" />
-            </div>
-          )}
-
-          {settings.showNewsFeed.value && (
-            <div>
-              <NewsFeed data={news} />
-            </div>
-          )}
-
-          {settings.showRedditActiveUsers.value && (
-            <div>
-              <Chart title="Active Users by Subreddit" data={subreddits} sortBy='date' />
-            </div>
-          )}
-
-          {settings.showSearchTrends.value && (
-            <div>
-              <AreaChart title="Search Trends" data={trends} sortBy='formattedTime'/>
-            </div>
-          )}
-
-          {settings.showSearchTrends.value && (
-            <div>
-              <Comments comments={comments} />
-            </div>
-          )}
-        </React.Fragment>
-      );
-    };
-
     const { settings } = this.state;
+    console.log(this.state);
+    const DataFrames = ({ settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments }) => (
+      <React.Fragment>
+        {settings.showRedditSentiment.value  && (
+          <div>
+            <h2>Time Frame (days)</h2>
+            <ButtonToolbar>
+              <ToggleButtonGroup
+                type="radio"
+                name="changeTimeFrame"
+                onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
+                defaultValue={timeFrame}
+              >
+                <ToggleButton value={'one'}>1</ToggleButton>
+                <ToggleButton value={'seven'}>7</ToggleButton>
+                <ToggleButton value={'thirty'}>30</ToggleButton>
+                <ToggleButton value={'all'}>All</ToggleButton>
+              </ToggleButtonGroup>
+            </ButtonToolbar>
+            <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+            <Delta title="At a Glance" deltas={deltas} tooltip="" />
+          </div>
+        )}
+
+        {settings.showNewsFeed.value && (
+          <div>
+            <NewsFeed data={news} />
+          </div>
+        )}
+
+        {settings.showRedditActiveUsers.value && (
+          <div>
+            <Chart title="Active Users by Subreddit" data={subreddits} sortBy='date' />
+          </div>
+        )}
+
+        {settings.showSearchTrends.value && (
+          <div>
+            <AreaChart title="Search Trends" data={trends} sortBy='formattedTime'/>
+          </div>
+        )}
+
+        {settings.showSearchTrends.value && (
+          <div>
+            <Comments comments={comments} />
+          </div>
+        )}
+      </React.Fragment>
+    );
 
     // wait for settings to load
     if(!settings) {
@@ -254,11 +250,11 @@ class App extends Component {
 
         { settings.slideshowMode.value && (
           <Slider {...sliderSettings}>
-            {dataFrames}
+            <DataFrames {...this.state} />
           </Slider>
         )}
         { settings.slideshowMode.value === false && (
-          {dataFrames}
+          <DataFrames {...this.state} />
         )}
 
       </div>

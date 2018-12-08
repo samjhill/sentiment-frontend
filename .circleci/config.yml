@@ -30,7 +30,3 @@ jobs:
       - run:
           name: SCP build files to Droplet
           command: scp -r -o StrictHostKeyChecking=no ~/repo/build/. $DROPLET_USER@$DROPLET_IP:~/sentiment/frontend/build/
-      #
-      # - run:
-      #     name: SSH into Droplet, restart server
-      #     command: ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/sentiment/frontend; forever restartall"
