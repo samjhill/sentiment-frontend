@@ -90,8 +90,7 @@ export default class MenuComponent extends React.Component {
           {Object.keys(settings).map(settingName => (
             <label key={settingName} className="toggle">
               <Toggle
-                value={this.state.settings[settingName].value}
-                defaultChecked={this.state.settings[settingName].value===true}
+                checked={this.state.settings[settingName].value}
                 onChange={(e) => this.handleChangeSetting(settingName, e)}
               />
               <StyledSpan>{this.state.settings[settingName].label}</StyledSpan>
