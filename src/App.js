@@ -17,9 +17,14 @@ import { Button } from 'react-bootstrap';
 import { ToggleButton } from 'react-bootstrap';
 import { ToggleButtonGroup } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import 'slick-carousel/slick/slick.css';
 import "react-toggle/style.css";
+
+const StyledSection = styled.div`
+  padding: 0rem 0rem 0rem 9rem
+`;
 
 class App extends Component {
   constructor(props) {
@@ -172,7 +177,7 @@ class App extends Component {
         autoplaySpeed={25000}
         >
         {settings.showRedditSentiment.value  && (
-          <div>
+          <StyledSection>
             <h2>Time Frame (days)</h2>
             <ButtonToolbar>
               <ToggleButtonGroup
@@ -189,31 +194,31 @@ class App extends Component {
             </ButtonToolbar>
             <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
             <Delta title="At a Glance" deltas={deltas} tooltip="" />
-          </div>
+          </StyledSection>
         )}
 
         {settings.showNewsFeed.value && (
-          <div>
+          <StyledSection>
             <NewsFeed data={news} />
-          </div>
+          </StyledSection>
         )}
 
         {settings.showRedditActiveUsers.value && (
-          <div>
+          <StyledSection>
             <Chart title="Active Users by Subreddit" data={subreddits} sortBy='date' />
-          </div>
+          </StyledSection>
         )}
 
         {settings.showSearchTrends.value && (
-          <div>
+          <StyledSection>
             <AreaChart title="Search Trends" data={trends} sortBy='formattedTime'/>
-          </div>
+          </StyledSection>
         )}
 
         {settings.showSearchTrends.value && (
-          <div>
+          <StyledSection>
             <Comments comments={comments} />
-          </div>
+          </StyledSection>
         )}
       </Slider>
     );
