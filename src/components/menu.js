@@ -66,6 +66,10 @@ export default class MenuComponent extends React.Component {
     settings[key].value = e.target.checked;
     this.setState({ settings });
     saveSetting(key, e.target.checked);
+
+    if (this.props.onChangeSetting) {
+      this.props.onChangeSetting(key, e.target.checked);
+    }
   }
 
   render () {

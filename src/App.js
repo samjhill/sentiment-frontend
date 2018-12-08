@@ -150,8 +150,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const settings = await loadSettings();
-    this.setState({ settings });
+    this.handleChangeSetting();
 
     this.fetchSentiment();
     this.fetchData();
@@ -163,6 +162,11 @@ class App extends Component {
     setInterval(() => {this.fetchRedditActiveUsers()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchTrends()}, this.refreshTime * 20000);
     setInterval(() => {this.fetchNews()}, this.refreshTime * 10000);
+  }
+
+  handleChangeSetting = async () => {
+    const settings = await loadSettings();
+    this.setState({ settings });
   }
 
   render() {
@@ -228,14 +232,10 @@ class App extends Component {
       return ('Loading...');
     }
 
-    var sliderSettings = {
-
-    };
-
 
     return (
       <div className="App">
-        <Menu />
+        <Menu onChangeSetting={this.handleChangeSetting} />
 
         {settings.showTickers.value  && (
           <div className="tickers">
