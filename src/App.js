@@ -219,7 +219,7 @@ class App extends Component {
           </StyledSection>
         )}
 
-        {settings.showSearchTrends.value && (
+        {settings.showRedditComments.value && (
           <StyledSection>
             <Comments comments={comments} />
           </StyledSection>
