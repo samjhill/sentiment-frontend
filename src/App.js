@@ -238,11 +238,11 @@ class App extends Component {
         <Menu onChangeSetting={this.handleChangeSetting} />
 
         {settings.showTickers.value  && (
-          <div className="tickers">
+          <StyledSection className="tickers">
             {this.state.tickers.map((item, index) => (
               <Ticker item={item} key={index}/>
             ))}
-          </div>
+          </StyledSection>
         )}
 
         <DataFrames {...this.state} />
