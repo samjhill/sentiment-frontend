@@ -49,17 +49,6 @@ class App extends Component {
     };
 
     this.url = 'http://localhost:8081';
-    if(process.env.env == 'test') {
-      this.url = 'http://192.168.2.83:8081';
-    }
-    if(process.env.env == 'prod') {
-      this.url = 'http://distributed.love:8081';
-    }
-  }
-
-  componentDidMount = async () => {
-    const settings = await loadSettings();
-    this.setState({ settings });
   }
 
   fetchSentiment() {
@@ -155,7 +144,10 @@ class App extends Component {
         })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const settings = await loadSettings();
+    this.setState({ settings });
+
     this.fetchSentiment();
     this.fetchData();
     this.fetchRedditActiveUsers();
@@ -253,7 +245,7 @@ class App extends Component {
             <DataFrames {...this.state} />
           </Slider>
         )}
-        { settings.slideshowMode.value === false && (
+        { !settings.slideshowMode.value && (
           <DataFrames {...this.state} />
         )}
 
