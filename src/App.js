@@ -162,9 +162,9 @@ class App extends Component {
 
   render() {
     const { settings } = this.state;
-    console.log(this.state);
+
     const DataFrames = ({ settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments }) => (
-      <React.Fragment>
+      <Slider>
         {settings.showRedditSentiment.value  && (
           <div>
             <h2>Time Frame (days)</h2>
@@ -209,7 +209,7 @@ class App extends Component {
             <Comments comments={comments} />
           </div>
         )}
-      </React.Fragment>
+      </Slider>
     );
 
     // wait for settings to load
@@ -240,14 +240,7 @@ class App extends Component {
           </div>
         )}
 
-        { settings.slideshowMode.value && (
-          <Slider {...sliderSettings}>
-            <DataFrames {...this.state} />
-          </Slider>
-        )}
-        { !settings.slideshowMode.value && (
-          <DataFrames {...this.state} />
-        )}
+        <DataFrames {...this.state} />
 
       </div>
     );
