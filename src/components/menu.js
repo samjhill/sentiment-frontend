@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { slide as Menu } from 'react-burger-menu';
+import { slide as BurgerMenu } from 'react-burger-menu';
 import Toggle from 'react-toggle';
 import styled from 'styled-components';
 
@@ -53,7 +53,7 @@ const styles = {
   }
 }
 
-export default class MenuComponent extends React.Component {
+export default class Menu extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -88,7 +88,7 @@ export default class MenuComponent extends React.Component {
     }
 
     return (
-      <Menu styles={styles}>
+      <BurgerMenu styles={styles}>
           {Object.keys(settings).map(settingName => (
             <label key={settingName} className="toggle">
               <Toggle
@@ -98,7 +98,7 @@ export default class MenuComponent extends React.Component {
               <StyledSpan>{this.state.settings[settingName].label}</StyledSpan>
             </label>
           ))}
-      </Menu>
+      </BurgerMenu>
     );
   }
 }
