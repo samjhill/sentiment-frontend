@@ -10,6 +10,8 @@ import Toggle from 'react-toggle';
 import Delta from './components/sentiment-delta';
 import NewsFeed from './components/newsFeed';
 import Tips from './components/tips';
+import Menu from './components/menu';
+import { loadSettings } from './util/settings';
 
 import { Button } from 'react-bootstrap';
 import { ToggleButton } from 'react-bootstrap';
@@ -25,7 +27,14 @@ class App extends Component {
 
     this.refreshTime = '60'; //in seconds
 
-    let tf = localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty';
+    const defaultShowComponents = {
+      tickers: true,
+      redditSentiment: true,
+      newsFeed: true,
+      redditUsers: true,
+      searchTrends: true,
+      comments: true,
+    };
 
     this.state = {
       tickers: [],
@@ -36,18 +45,21 @@ class App extends Component {
       news: {},
       comments: [],
       deltas: {},
-      env: 'prod',
-      slideshowMode: true,
-      timeFrame: tf
+      timeFrame: localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty'
     };
 
     this.url = 'http://localhost:8081';
-    if(this.state.env == 'test') {
+    if(process.env.env == 'test') {
       this.url = 'http://192.168.2.83:8081';
     }
-    if(this.state.env == 'prod') {
+    if(process.env.env == 'prod') {
       this.url = 'http://distributed.love:8081';
     }
+  }
+
+  componentDidMount = async () => {
+    const settings = await loadSettings();
+    this.setState({ settings });
   }
 
   fetchSentiment() {
@@ -157,6 +169,66 @@ class App extends Component {
   }
 
   render() {
+    const dataFrames = () => {
+      const { settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments } = this.state;
+
+      return (
+        <React.Fragment>
+          {settings.showRedditSentiment.value  && (
+            <div>
+              <h2>Time Frame (days)</h2>
+              <ButtonToolbar>
+                <ToggleButtonGroup
+                  type="radio"
+                  name="changeTimeFrame"
+                  onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
+                  defaultValue={timeFrame}
+                >
+                  <ToggleButton value={'one'}>1</ToggleButton>
+                  <ToggleButton value={'seven'}>7</ToggleButton>
+                  <ToggleButton value={'thirty'}>30</ToggleButton>
+                  <ToggleButton value={'all'}>All</ToggleButton>
+                </ToggleButtonGroup>
+              </ButtonToolbar>
+              <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+              <Delta title="At a Glance" deltas={deltas} tooltip="" />
+            </div>
+          )}
+
+          {settings.showNewsFeed.value && (
+            <div>
+              <NewsFeed data={news} />
+            </div>
+          )}
+
+          {settings.showRedditActiveUsers.value && (
+            <div>
+              <Chart title="Active Users by Subreddit" data={subreddits} sortBy='date' />
+            </div>
+          )}
+
+          {settings.showSearchTrends.value && (
+            <div>
+              <AreaChart title="Search Trends" data={trends} sortBy='formattedTime'/>
+            </div>
+          )}
+
+          {settings.showSearchTrends.value && (
+            <div>
+              <Comments comments={comments} />
+            </div>
+          )}
+        </React.Fragment>
+      );
+    };
+
+    const { settings } = this.state;
+
+    // wait for settings to load
+    if(!settings) {
+      return ('Loading...');
+    }
+
     var sliderSettings = {
       dots: true,
       infinite: true,
@@ -168,111 +240,29 @@ class App extends Component {
     };
 
 
-    if(this.state.slideshowMode == true) {
-      return (
-          <div className="App">
-            <label className="toggle">
-              <Toggle
-                defaultChecked={this.state.slideshowMode==true}
-                onChange={() => {this.setState({slideshowMode: !this.state.slideshowMode})}}
-              />
-              <span>View in Slideshow Mode</span>
-            </label>
+    return (
+      <div className="App">
+        <Menu />
 
-            <div className="tickers">
-              {this.state.tickers.map((item, index) => (
-                <Ticker item={item} key={index}/>
-              ))}
-            </div>
-
-            <Slider {...sliderSettings}>
-              <div>
-                <h2>Time Frame (days)</h2>
-                <ButtonToolbar>
-                  <ToggleButtonGroup
-                    type="radio"
-                    name="changeTimeFrame"
-                    onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
-                    defaultValue={this.state.timeFrame}
-                  >
-                    <ToggleButton value={'one'}>1</ToggleButton>
-                    <ToggleButton value={'seven'}>7</ToggleButton>
-                    <ToggleButton value={'thirty'}>30</ToggleButton>
-                    <ToggleButton value={'all'}>All</ToggleButton>
-                  </ToggleButtonGroup>
-                </ButtonToolbar>
-                <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
-                <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
-              </div>
-
-              <div>
-                <NewsFeed data={this.state.news} />
-              </div>
-
-              <div>
-                <Chart title="Active Users by Subreddit" data={this.state.subreddits} sortBy='date' />
-              </div>
-
-              <div>
-                <AreaChart title="Search Trends" data={this.state.trends} sortBy='formattedTime'/>
-              </div>
-
-              <div>
-                <Comments comments={this.state.comments} />
-              </div>
-            </Slider>
+        {settings.showTickers.value  && (
+          <div className="tickers">
+            {this.state.tickers.map((item, index) => (
+              <Ticker item={item} key={index}/>
+            ))}
           </div>
-        );
-    }
-    else {
-      return (
-          <div className="App">
-            <label className="toggle">
-              <Toggle
-                defaultChecked={this.state.slideshowMode==true}
-                onChange={() => {this.setState({slideshowMode: !this.state.slideshowMode})}}
-              />
-              <span>View in Slideshow Mode</span>
-            </label>
+        )}
 
-            <div className="tickers">
-              {this.state.tickers.map((item, index) => (
-                <Ticker item={item} key={index}/>
-              ))}
-            </div>
+        { settings.slideshowMode.value && (
+          <Slider {...sliderSettings}>
+            {dataFrames}
+          </Slider>
+        )}
+        { settings.slideshowMode.value === false && (
+          {dataFrames}
+        )}
 
-            <NewsFeed data={this.state.news} />
-
-            <h2>Time Frame (days)</h2>
-            <ButtonToolbar>
-              <ToggleButtonGroup
-                type="radio"
-                name="changeTimeFrame"
-                onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
-                defaultValue={this.state.timeFrame}
-              >
-                <ToggleButton value={'one'}>1</ToggleButton>
-                <ToggleButton value={'seven'}>7</ToggleButton>
-                <ToggleButton value={'thirty'}>30</ToggleButton>
-                <ToggleButton value={'all'}>All</ToggleButton>
-              </ToggleButtonGroup>
-            </ButtonToolbar>
-
-            <Delta title="At a Glance" deltas={this.state.deltas} tooltip="" />
-
-            <Chart title="Reddit Sentiment" data={this.state.sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
-
-            <Chart title="Active Users by Subreddit" data={this.state.subreddits} sortBy='date' />
-
-            <AreaChart title="Search Trends" data={this.state.trends} sortBy='formattedTime'/>
-
-            <Comments comments={this.state.comments} />
-
-          </div>
-        );
-    }
-
-
+      </div>
+    );
   }
 }
 
