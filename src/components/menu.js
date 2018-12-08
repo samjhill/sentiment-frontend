@@ -81,7 +81,7 @@ export default class Menu extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { settings } = this.state;
     if (!settings){
       return null;
