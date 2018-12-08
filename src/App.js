@@ -54,6 +54,9 @@ class App extends Component {
     };
 
     this.url = 'http://localhost:8081';
+    if (process.env.ENVIRONMENT == 'prod') {
+      this.url = 'https://distributed.love:8081';
+    }
   }
 
   fetchSentiment() {
