@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:11.3
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -19,23 +19,18 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      - run:
+         name: Install Dependencies
+         command: yarn install
 
-      - run: yarn test
+      - run:
+           name: Build Static Site
+           command: CI=false yarn run build
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-        
 deployment:
   master:
     branch: master
     commands:
       - echo 'deploying'
-      - ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/sentiment/frontend; ./circle_deployer.sh"
+      - scp ~/repo $DROPLET_USER@DROPLET_IP:~/sentiment/frontend
+      - ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/sentiment/frontend; forever restartall"
