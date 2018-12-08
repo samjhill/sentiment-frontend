@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import Toggle from 'react-toggle';
 import { loadSettings, saveSetting } from '../util/settings';
+import styled from 'styled-components';
+
+const StyledSpan = styled.span`
+  top: -5px;
+  left: 5px;
+  position: relative;
+`;
 
 const styles = {
   bmBurgerButton: {
@@ -80,7 +87,6 @@ export default class MenuComponent extends React.Component {
 
     return (
       <Menu styles={styles}>
-
           {Object.keys(settings).map(settingName => (
             <label key={settingName} className="toggle">
               <Toggle
@@ -88,7 +94,7 @@ export default class MenuComponent extends React.Component {
                 defaultChecked={this.state.settings[settingName].value===true}
                 onChange={(e) => this.handleChangeSetting(settingName, e)}
               />
-              <span>{this.state.settings[settingName].label}</span>
+              <StyledSpan>{this.state.settings[settingName].label}</StyledSpan>
             </label>
           ))}
       </Menu>

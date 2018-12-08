@@ -53,10 +53,7 @@ class App extends Component {
       timeFrame: localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty'
     };
 
-    this.url = 'http://localhost:8081';
-    if (process.env.ENVIRONMENT == 'prod') {
-      this.url = 'https://distributed.love:8081';
-    }
+    this.url = 'http://distributed.love:8081';
   }
 
   fetchSentiment() {
