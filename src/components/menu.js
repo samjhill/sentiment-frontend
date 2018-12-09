@@ -11,6 +11,11 @@ const StyledSpan = styled.span`
   position: relative;
 `;
 
+const StyledLinks = styled.ul`
+  margin-top: 3rem;
+  list-style-type: none;
+`;
+
 const styles = {
   bmBurgerButton: {
     position: 'fixed',
@@ -97,6 +102,10 @@ export default class Menu extends React.Component {
               <StyledSpan>{this.state.settings[settingName].label}</StyledSpan>
             </label>
           ))}
+          <StyledLinks>
+            <li><a target="_blank" href="http://www.samjhill.com">About this project</a></li>
+            <li>Created by <a target="_blank" href="http://www.samjhill.com">Sam Hill</a></li>
+          </StyledLinks>
       </BurgerMenu>
     );
   }
