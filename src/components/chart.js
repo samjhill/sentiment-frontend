@@ -41,7 +41,7 @@ export default class Chart extends Component {
 			(<SimpleTooltip
 					content={this.props.tooltip}
 					placement="bottom"
-					fontSize="1rem">
+					fontSize="1.7rem">
 						<i className="fa fa-question"></i>
 					</SimpleTooltip>
 			);
