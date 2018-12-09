@@ -39,8 +39,8 @@ export const loadSettings = () => {
   return defaultSettings;
 };
 
-export const saveSetting = async (key, value) => {
-  const settings = await loadSettings();
+export const saveSetting = (key, value) => {
+  const settings = loadSettings();
   settings[key].value = value;
   localStorage.setItem('settings', JSON.stringify(settings));
 };

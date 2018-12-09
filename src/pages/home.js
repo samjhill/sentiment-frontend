@@ -12,7 +12,6 @@ import Delta from '../components/sentiment-delta';
 import NewsFeed from '../components/newsFeed';
 import Tips from '../components/tips';
 
-import { loadSettings, saveSetting } from '../util/settings';
 import { Button } from 'react-bootstrap';
 import { ToggleButton } from 'react-bootstrap';
 import { ToggleButtonGroup } from 'react-bootstrap';
@@ -158,21 +157,11 @@ export default class Home extends Component {
     setInterval(() => {this.fetchRedditActiveUsers()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchTrends()}, this.refreshTime * 20000);
     setInterval(() => {this.fetchNews()}, this.refreshTime * 10000);
-
-    this.handleLoadSettings();
-  }
-
-  handleLoadSettings = () => {
-    const settings = loadSettings();
-    this.setState({ settings });
-  }
-
-  handleChangeSetting = async (settings) => {
-    this.setState({ settings });
   }
 
   render() {
-    const { settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments } = this.state;
+    const { settings } = this.props;
+    const { timeFrame, sentiment, deltas, news, subreddits, trends, comments } = this.state;
 
     // wait for settings to load
     if(!settings) {

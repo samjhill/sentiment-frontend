@@ -76,7 +76,7 @@ export default class Menu extends React.Component {
   }
 
   componentDidMount = async() => {
-    const settings = await loadSettings();
+    const settings = loadSettings();
     this.setState({ settings });
   }
 
@@ -84,11 +84,11 @@ export default class Menu extends React.Component {
     this.setState({ isOpen: !this.state.isOpen})
   }
 
-  handleChangeSetting = async (key, e) => {
+  handleChangeSetting = (key, e) => {
     const settings = this.state.settings;
     settings[key].value = e.target.checked;
-
-    await saveSetting(key, e.target.checked);
+    console.log(key, e.target.checked);
+    saveSetting(key, e.target.checked);
 
     if (this.props.onChangeSetting) {
       this.props.onChangeSetting(settings);
