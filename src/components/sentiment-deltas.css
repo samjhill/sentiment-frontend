@@ -5,7 +5,10 @@
 .deltas {
   max-width: 600px;
   margin: 0 auto;
-  font-size: 3rem;
+  font-size: 1.5rem;
+  @media(min-width: 800px) {
+    font-size: 3rem;
+  }
 }
 
 .delta {
@@ -21,7 +24,10 @@
 }
 
 .delta .fa {
-  font-size: 4rem;
+  font-size: 2.5rem;
+  @media(min-width: 800px) {
+    font-size: 4rem;
+  }
 }
 
 .delta .fa-frown-o {
