@@ -26,6 +26,17 @@ const StyledSection = styled.div`
   padding: 0rem 0rem 0rem 9rem
 `;
 
+const StyledButtonToolbarContainer = styled.div`
+  display: inline-flex;
+  position: inherit;
+  float: right;
+  p {
+    color: white;
+    font-size: 2rem;
+    margin: 5px 10px;
+  }
+`;
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -187,21 +198,28 @@ export default class Home extends Component {
           >
           {settings.showRedditSentiment.value  && (
             <StyledSection>
-              <h2>Time Frame (days)</h2>
-              <ButtonToolbar>
-                <ToggleButtonGroup
-                  type="radio"
-                  name="changeTimeFrame"
-                  onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
-                  defaultValue={timeFrame}
-                >
-                  <ToggleButton value={'one'}>1</ToggleButton>
-                  <ToggleButton value={'seven'}>7</ToggleButton>
-                  <ToggleButton value={'thirty'}>30</ToggleButton>
-                  <ToggleButton value={'all'}>All</ToggleButton>
-                </ToggleButtonGroup>
-              </ButtonToolbar>
+              <StyledButtonToolbarContainer>
+                <p>Time Frame (days)</p>
+                <ButtonToolbar>
+                  <ToggleButtonGroup
+                    type="radio"
+                    name="changeTimeFrame"
+                    onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
+                    defaultValue={timeFrame}
+                  >
+                    <ToggleButton value={'one'}>1</ToggleButton>
+                    <ToggleButton value={'seven'}>7</ToggleButton>
+                    <ToggleButton value={'thirty'}>30</ToggleButton>
+                    <ToggleButton value={'all'}>All</ToggleButton>
+                  </ToggleButtonGroup>
+                </ButtonToolbar>
+              </StyledButtonToolbarContainer>
               <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+            </StyledSection>
+          )}
+
+          {settings.showDeltas.value && (
+            <StyledSection>
               <Delta title="At a Glance" deltas={deltas} tooltip="" />
             </StyledSection>
           )}

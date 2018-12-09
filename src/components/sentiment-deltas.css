@@ -3,9 +3,9 @@
 }
 
 .deltas {
-  float: left;
-  max-width: 450px;
-  display: inline-block;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 3rem;
 }
 
 .delta {
@@ -13,17 +13,15 @@
 }
 
 .delta .subName {
-  font-size: 1.5rem;
 }
 
 .delta .diff {
-  font-size: 1.5rem;
   float: right;
   margin-top: 5px;
 }
 
 .delta .fa {
-    font-size: 2rem;
+  font-size: 4rem;
 }
 
 .delta .fa-frown-o {

@@ -7,6 +7,10 @@ const defaultSettings = {
     label: 'Reddit Sentiment',
     value: true,
   },
+  showDeltas: {
+    label: 'Sentiment At-A-Glance',
+    value: true,
+  },
   showNewsFeed: {
     label: 'News Feed',
     value: true,
