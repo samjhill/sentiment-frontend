@@ -15,6 +15,15 @@ const StyledSpan = styled.span`
 const StyledLinks = styled.ul`
   margin-top: 3rem;
   list-style-type: none;
+  padding-inline-start: 0px;
+  a {
+    color: white;
+    font-weight: bold;
+  }
+  li {
+    margin: 1rem 0;
+    font-size: 18px;
+  }
 `;
 
 const styles = {
