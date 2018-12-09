@@ -29,7 +29,6 @@ const StyledSection = styled.div`
 const StyledButtonToolbarContainer = styled.div`
   display: inline-flex;
   position: inherit;
-  float: right;
   p {
     color: white;
     font-size: 2rem;
@@ -198,6 +197,7 @@ export default class Home extends Component {
           >
           {settings.showRedditSentiment.value  && (
             <StyledSection>
+              <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
               <StyledButtonToolbarContainer>
                 <p>Time Frame (days)</p>
                 <ButtonToolbar>
@@ -214,7 +214,6 @@ export default class Home extends Component {
                   </ToggleButtonGroup>
                 </ButtonToolbar>
               </StyledButtonToolbarContainer>
-              <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
             </StyledSection>
           )}
 
