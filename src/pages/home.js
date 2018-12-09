@@ -23,7 +23,10 @@ import 'slick-carousel/slick/slick.css';
 import "react-toggle/style.css";
 
 const StyledSection = styled.div`
-  padding: 0rem 0rem 0rem 9rem
+  padding: 11rem 0rem 0rem 0rem;
+  @media(min-width: 800px) {
+    padding: 0rem 0rem 0rem 9rem;
+  }
 `;
 
 const StyledButtonToolbarContainer = styled.div`
