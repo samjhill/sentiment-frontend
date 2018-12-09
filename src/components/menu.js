@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { slide as BurgerMenu } from 'react-burger-menu';
 import Toggle from 'react-toggle';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 import { loadSettings, saveSetting } from '../util/settings';
 
@@ -93,6 +94,11 @@ export default class Menu extends React.Component {
 
     return (
       <BurgerMenu styles={styles}>
+          <StyledLinks>
+            <li><Link to="/"><i className="fa fa-home" /> Home</Link></li>
+            <li><Link to="/about/"><i className="fa fa-question" /> About this project</Link></li>
+          </StyledLinks>
+
           {Object.keys(settings).map(settingName => (
             <label key={settingName} className="toggle">
               <Toggle
@@ -102,10 +108,8 @@ export default class Menu extends React.Component {
               <StyledSpan>{this.state.settings[settingName].label}</StyledSpan>
             </label>
           ))}
-          <StyledLinks>
-            <li><a target="_blank" href="http://www.samjhill.com">About this project</a></li>
-            <li>Created by <a target="_blank" href="http://www.samjhill.com">Sam Hill</a></li>
-          </StyledLinks>
+
+          <p>Created by <a target="_blank" href="http://www.samjhill.com">Sam Hill</a></p>
       </BurgerMenu>
     );
   }
