@@ -39,7 +39,7 @@ export default class NewsFeed extends Component {
 			<StyledNewsItem key={title} target="_blank" href={href}>
 				<StyledTitle>{title}</StyledTitle>
 				<StyledDescription>{description.replace(/&nbsp;/g, ' ')}</StyledDescription>
-		</StyledNewsItem>
+			</StyledNewsItem>
 		)
 	};
 
