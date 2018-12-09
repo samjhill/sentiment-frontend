@@ -2,7 +2,10 @@ import React from "react";
 import styled from 'styled-components';
 
 const StyledSection = styled.div`
-  padding: 0rem 0rem 0rem 9rem
+  padding: 10rem 0rem 0rem 0rem;
+  @media(min-width: 800px) {
+    padding: 0rem 0rem 0rem 9rem;
+  }
   color: white;
   font-size: 1.5rem;
   a {
