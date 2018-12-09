@@ -38,7 +38,7 @@ export default class FilledAreaChart extends Component {
 		return (
 			<div className="chart-container">
 				<h2>{this.props.title}</h2>
-        <AreaChart width={1000} height={700} data={this.props.data}
+        <AreaChart width={1500} height={800} data={this.props.data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <defs>
             {
