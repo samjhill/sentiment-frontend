@@ -13,7 +13,7 @@ export default class Comment extends Component {
   						: this.props.item.permalink
   					}>
               <span className="title">{this.props.title}</span>
-  						<span className="comment">{this.props.item.text}</span>
+  						<span className="comment">{this.props.item.text.replace(/&#39;/g, '\'')}</span>
               <span className="author"><i className="fa fa-user"></i> {this.props.item.author}</span>
   				</a>
   			</SimpleTooltip>
