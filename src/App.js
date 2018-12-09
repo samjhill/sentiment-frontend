@@ -11,7 +11,7 @@ import Delta from './components/sentiment-delta';
 import NewsFeed from './components/newsFeed';
 import Tips from './components/tips';
 import Menu from './components/menu';
-import { loadSettings } from './util/settings';
+import { loadSettings, saveSetting } from './util/settings';
 
 import { Button } from 'react-bootstrap';
 import { ToggleButton } from 'react-bootstrap';
@@ -50,10 +50,11 @@ class App extends Component {
       news: {},
       comments: [],
       deltas: {},
-      timeFrame: localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty'
+      timeFrame: localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty',
+      settings: null,
     };
 
-    this.url = 'http://distributed.love:8081';
+    this.url = 'http://localhost:8081';
   }
 
   fetchSentiment() {
@@ -149,89 +150,38 @@ class App extends Component {
         })
   }
 
-  async componentDidMount() {
-    this.handleChangeSetting();
-
+  componentDidMount() {
     this.fetchSentiment();
     this.fetchData();
     this.fetchRedditActiveUsers();
     this.fetchTrends();
     this.fetchNews();
+
     setInterval(() => {this.fetchSentiment()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchData()}, this.refreshTime * 1000);
     setInterval(() => {this.fetchRedditActiveUsers()}, this.refreshTime * 10000);
     setInterval(() => {this.fetchTrends()}, this.refreshTime * 20000);
     setInterval(() => {this.fetchNews()}, this.refreshTime * 10000);
+
+    this.handleLoadSettings();
   }
 
-  handleChangeSetting = async () => {
-    const settings = await loadSettings();
+  handleLoadSettings = () => {
+    const settings = loadSettings();
+    this.setState({ settings });
+  }
+
+  handleChangeSetting = async (settings) => {
     this.setState({ settings });
   }
 
   render() {
-    const { settings } = this.state;
-
-    const DataFrames = ({ settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments }) => (
-      <Slider
-        dots
-        infinite
-        speed={500}
-        autoplay
-        autoplaySpeed={25000}
-        >
-        {settings.showRedditSentiment.value  && (
-          <StyledSection>
-            <h2>Time Frame (days)</h2>
-            <ButtonToolbar>
-              <ToggleButtonGroup
-                type="radio"
-                name="changeTimeFrame"
-                onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
-                defaultValue={timeFrame}
-              >
-                <ToggleButton value={'one'}>1</ToggleButton>
-                <ToggleButton value={'seven'}>7</ToggleButton>
-                <ToggleButton value={'thirty'}>30</ToggleButton>
-                <ToggleButton value={'all'}>All</ToggleButton>
-              </ToggleButtonGroup>
-            </ButtonToolbar>
-            <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
-            <Delta title="At a Glance" deltas={deltas} tooltip="" />
-          </StyledSection>
-        )}
-
-        {settings.showNewsFeed.value && (
-          <StyledSection>
-            <NewsFeed data={news} />
-          </StyledSection>
-        )}
-
-        {settings.showRedditActiveUsers.value && (
-          <StyledSection>
-            <Chart title="Active Users by Subreddit" data={subreddits} sortBy='date' />
-          </StyledSection>
-        )}
-
-        {settings.showSearchTrends.value && (
-          <StyledSection>
-            <AreaChart title="Search Trends" data={trends} sortBy='formattedTime'/>
-          </StyledSection>
-        )}
-
-        {settings.showRedditComments.value && (
-          <StyledSection>
-            <Comments comments={comments} />
-          </StyledSection>
-        )}
-      </Slider>
-    );
+    const { settings, timeFrame, sentiment, deltas, news, subreddits, trends, comments } = this.state;
 
     // wait for settings to load
     if(!settings) {
       return ('Loading...');
     }
-
 
     return (
       <div className="App">
@@ -245,7 +195,58 @@ class App extends Component {
           </StyledSection>
         )}
 
-        <DataFrames {...this.state} />
+        <Slider
+          dots
+          infinite
+          speed={500}
+          autoplay
+          autoplaySpeed={25000}
+          >
+          {settings.showRedditSentiment.value  && (
+            <StyledSection>
+              <h2>Time Frame (days)</h2>
+              <ButtonToolbar>
+                <ToggleButtonGroup
+                  type="radio"
+                  name="changeTimeFrame"
+                  onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
+                  defaultValue={timeFrame}
+                >
+                  <ToggleButton value={'one'}>1</ToggleButton>
+                  <ToggleButton value={'seven'}>7</ToggleButton>
+                  <ToggleButton value={'thirty'}>30</ToggleButton>
+                  <ToggleButton value={'all'}>All</ToggleButton>
+                </ToggleButtonGroup>
+              </ButtonToolbar>
+              <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+              <Delta title="At a Glance" deltas={deltas} tooltip="" />
+            </StyledSection>
+          )}
+
+          {settings.showNewsFeed.value && (
+            <StyledSection>
+              <NewsFeed data={news} />
+            </StyledSection>
+          )}
+
+          {settings.showRedditActiveUsers.value && (
+            <StyledSection>
+              <Chart title="Active Users by Subreddit" data={subreddits} sortBy='date' />
+            </StyledSection>
+          )}
+
+          {settings.showSearchTrends.value && (
+            <StyledSection>
+              <AreaChart title="Search Trends" data={trends} sortBy='formattedTime'/>
+            </StyledSection>
+          )}
+
+          {settings.showRedditComments.value && (
+            <StyledSection>
+              <Comments comments={comments} />
+            </StyledSection>
+          )}
+        </Slider>
 
       </div>
     );

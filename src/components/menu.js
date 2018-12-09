@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { loadSettings, saveSetting } from '../util/settings';
 
-
 const StyledSpan = styled.span`
   top: -5px;
   left: 5px;
@@ -77,7 +76,7 @@ export default class Menu extends React.Component {
     saveSetting(key, e.target.checked);
 
     if (this.props.onChangeSetting) {
-      this.props.onChangeSetting(key, e.target.checked);
+      this.props.onChangeSetting(settings);
     }
   }
 

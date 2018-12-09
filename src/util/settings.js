@@ -25,7 +25,7 @@ const defaultSettings = {
   },
 };
 
-export const loadSettings = async () => {
+export const loadSettings = () => {
   // load settings from storage
   const storedSettings = JSON.parse(localStorage.getItem('settings'));
 
@@ -43,4 +43,4 @@ export const saveSetting = async (key, value) => {
   const settings = await loadSettings();
   settings[key].value = value;
   localStorage.setItem('settings', JSON.stringify(settings));
-}
+};
