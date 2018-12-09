@@ -5,7 +5,7 @@ export default class NewsFeed extends Component {
 	buildNewsItem(title, description, href) {
 		return (<a className="news-item" target="_blank" href={href}>
 				<span className="title">{title}</span>
-				<span className="description">{description}</span>
+				<span className="description">{description.replace(/&nbsp;/g, ' ')}</span>
 		</a>)
 	};
 
