@@ -11,7 +11,7 @@ import Toggle from 'react-toggle';
 import Delta from '../components/sentiment-delta';
 import NewsFeed from '../components/newsFeed';
 import Tips from '../components/tips';
-import { isMobile } from '../util';
+// import { isMobile } from '../util/';
 import { Button } from 'react-bootstrap';
 import { ToggleButton } from 'react-bootstrap';
 import { ToggleButtonGroup } from 'react-bootstrap';
@@ -195,7 +195,7 @@ export default class Home extends Component {
           autoplay
           autoplaySpeed={25000}
           >
-          {settings.showRedditSentiment.value  && !isMobile() && (
+          {settings.showRedditSentiment.value  && (
             <StyledSection>
               <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
               <StyledButtonToolbarContainer>
@@ -229,13 +229,13 @@ export default class Home extends Component {
             </StyledSection>
           )}
 
-          {settings.showRedditActiveUsers.value && !isMobile() && (
+          {settings.showRedditActiveUsers.value && (
             <StyledSection>
               <Chart title="Active Users by Subreddit" data={subreddits} sortBy='date' />
             </StyledSection>
           )}
 
-          {settings.showSearchTrends.value && !isMobile() && (
+          {settings.showSearchTrends.value && (
             <StyledSection>
               <AreaChart title="Search Trends" data={trends} sortBy='formattedTime'/>
             </StyledSection>
