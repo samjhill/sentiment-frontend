@@ -4,13 +4,14 @@ import styled from 'styled-components';
 const StyledSection = styled.div`
   padding: 0rem 0rem 0rem 9rem
   color: white;
+  font-size: 1.5rem;
   a {
     color: white;
     font-weight: bold;
   }
   h3 {
-    border-top: 1px solid white;
-    padding-top: 3rem;
+    border-top: 1px solid #ffffff36;
+    padding: 3rem 0 1rem 0;
   }
 `;
 
