@@ -69,11 +69,11 @@ export default class Menu extends React.Component {
     this.setState({ isOpen: !this.state.isOpen})
   }
 
-  handleChangeSetting = (key, e) => {
+  handleChangeSetting = async (key, e) => {
     const settings = this.state.settings;
     settings[key].value = e.target.checked;
-    this.setState({ settings });
-    saveSetting(key, e.target.checked);
+
+    await saveSetting(key, e.target.checked);
 
     if (this.props.onChangeSetting) {
       this.props.onChangeSetting(settings);
