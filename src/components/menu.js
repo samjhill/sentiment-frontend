@@ -22,7 +22,7 @@ const StyledLinks = styled.ul`
   }
   li {
     margin: 1rem 0;
-    font-size: 18px;
+    font-size: 2.5rem;
   }
 `;
 
@@ -46,6 +46,7 @@ const styles = {
   },
   bmMenuWrap: {
     width: '320px',
+    top: '0',
   },
   bmMenu: {
     background: '#373a47',
