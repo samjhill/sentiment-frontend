@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import SimpleTooltip from "react-simple-tooltip";
+import styled from 'styled-components';
 import './ticker.css';
 import './sentiment-deltas.css';
+
+const LabelContainer = styled.div`
+  width: 100%;
+`;
+
+const RightNow = styled.h3`
+  display: inline-block;
+  text-align: left;
+  width: 50%;
+`;
+
+const WeeklyChange = styled.h3`
+  display: inline-block;
+  text-align: right;
+  width: 50%;
+`;
 
 export default class Delta extends Component {
   pickEmoji(score) {
@@ -41,6 +58,10 @@ export default class Delta extends Component {
 	render() {
       return (<div className="deltas">
         <h2>{this.props.title}</h2>
+        <LabelContainer>
+          <RightNow>Right now</RightNow>
+          <WeeklyChange>Change this week</WeeklyChange>
+        </LabelContainer>
   		  {Object.keys(this.props.deltas).map((delta, index) => {
           let deltaItem = this.props.deltas[delta];
           var emoji = this.pickEmoji(deltaItem.currentScore);
