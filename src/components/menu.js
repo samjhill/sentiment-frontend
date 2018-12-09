@@ -19,10 +19,16 @@ const StyledLinks = styled.ul`
   a {
     color: white;
     font-weight: bold;
+    &:hover {
+      text-decoration: none;
+    }
   }
   li {
     margin: 1rem 0;
     font-size: 2.5rem;
+    transition: all .1s;
+    &:hover {
+      transform: scale(1.05);
   }
 `;
 

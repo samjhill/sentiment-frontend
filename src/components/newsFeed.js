@@ -36,7 +36,7 @@ const StyledDescription = styled.span`
 export default class NewsFeed extends Component {
 	buildNewsItem(title, description, href) {
 		return (
-			<StyledNewsItem target="_blank" href={href}>
+			<StyledNewsItem key={title} target="_blank" href={href}>
 				<StyledTitle>{title}</StyledTitle>
 				<StyledDescription>{description.replace(/&nbsp;/g, ' ')}</StyledDescription>
 		</StyledNewsItem>
