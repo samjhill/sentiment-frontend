@@ -34,7 +34,7 @@ const StyledLinks = styled.ul`
 
 const styles = {
   bmBurgerButton: {
-    position: 'fixed',
+    position: 'relative',
     width: '36px',
     height: '30px',
     left: '36px',

@@ -23,7 +23,7 @@ import 'slick-carousel/slick/slick.css';
 import "react-toggle/style.css";
 
 const StyledSection = styled.div`
-  padding: 10rem 0rem 0rem 0rem;
+  padding: 7rem 0rem 0rem 0rem;
   @media(min-width: 800px) {
     padding: 0rem 0rem 0rem 9rem;
   }
