@@ -1,6 +1,6 @@
 http://distributed.love/
 
-This is the frontend for checking how different forums on Reddit are feeling at a given time, written in React.JS. It also connects with my c-lightning node to allow micropayments using [the Lightning Network](https://en.wikipedia.org/wiki/Lightning_Network).
+This is the frontend for checking how different forums on Reddit are feeling at a given time, written in React.JS. 
 
 ![sentiment](./sentiment.png)
 
