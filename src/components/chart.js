@@ -31,9 +31,17 @@ export default class Chart extends Component {
 	render() {
 		var labels = [];
 		if(this.props.data.length > 0) {
-				delete this.props.data[0][this.props.sortBy];
-				labels = Object.keys(this.props.data[0]);
+				this.props.data.map(datum => {
+						delete datum[this.props.sortBy];
+						const keys = Object.keys(datum);
+						keys.map(keyName => {
+							if (labels.indexOf(keyName) === -1) {
+								labels.push(keyName);
+							}
+						})
+				});
 		}
+
 
 		var tooltip;
 		if(this.props.tooltip) {
