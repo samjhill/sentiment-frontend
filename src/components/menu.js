@@ -18,7 +18,6 @@ const StyledLinks = styled.ul`
   padding-inline-start: 0px;
   a {
     color: white;
-    font-weight: bold;
     &:hover {
       text-decoration: none;
     }
@@ -125,7 +124,7 @@ export default class Menu extends React.Component {
             </label>
           ))}
 
-          <p>Created by <a target="_blank" href="http://www.samjhill.com">Sam Hill</a></p>
+          <p>Created by <a target="_blank" href="http://www.github.com/samjhill">Sam Hill</a></p>
       </BurgerMenu>
     );
   }
