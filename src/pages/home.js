@@ -208,7 +208,7 @@ export default class Home extends Component {
                   <ToggleButtonGroup
                     type="radio"
                     name="changeTimeFrame"
-                    onChange={(value) => {localStorage.setItem('timeFrame', value); this.fetchSentiment();}}
+                    onChange={(value) => {localStorage.setItem('timeFrame', value); this.setState({timeFrame: value}, this.fetchSentiment()); }}
                     defaultValue={timeFrame}
                   >
                     <ToggleButton value={'one'}>1</ToggleButton>
