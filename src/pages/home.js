@@ -45,6 +45,7 @@ export default class Home extends Component {
 
     this.refreshTime = '60'; //in seconds
 
+    const timeFrame = localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty'
     this.state = {
       tickers: [],
       sentiment: [],
@@ -54,7 +55,7 @@ export default class Home extends Component {
       news: {},
       comments: [],
       deltas: {},
-      timeFrame: localStorage.getItem('timeFrame') ? localStorage.getItem('timeFrame') : 'thirty',
+      timeFrame,
       settings: null,
     };
 
@@ -68,7 +69,7 @@ export default class Home extends Component {
   fetchSentiment() {
     axios.get(this.url + "/sentiment")
           .then(json => {
-            var numDays = localStorage.getItem('timeFrame');
+            var numDays = this.state.timeFrame;
             const sentiment = Object.keys(json.data[numDays]).map((label, index) => {
               json.data[numDays][label].date = label;
               return json.data[numDays][label];
