@@ -26,3 +26,7 @@
 .chart-container .fa-question {
   color: grey;
 }
+
+.recharts-label tspan {
+  color: white !important;
+}

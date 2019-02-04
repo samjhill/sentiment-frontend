@@ -75,7 +75,15 @@ export default class Home extends Component {
               return json.data[numDays][label];
             });
 
-            this.setState({sentiment: sentiment});
+            this.setState(
+              {
+                sentiment: {
+                  ticks: Object.keys(json.data[numDays]),
+                  data: sentiment,
+                }
+              }
+            );
+
           }).catch(ex => {
             console.log('parsing failed', ex)
           })
@@ -199,9 +207,9 @@ export default class Home extends Component {
           autoplay
           autoplaySpeed={25000}
           >
-          {settings.showRedditSentiment.value  && !isMobile() && (
+          {settings.showRedditSentiment.value  && !isMobile() && sentiment && (
             <StyledSection>
-              <Chart title="Reddit Sentiment" data={sentiment} tooltip="Higher number means more positivity in word choice" sortBy='date' />
+              <Chart title="Reddit Sentiment" data={sentiment.data} ticks={sentiment.ticks} tooltip="Higher number means more positivity in word choice" sortBy='date' />
               <StyledButtonToolbarContainer>
                 <p>Time Frame (days)</p>
                 <ButtonToolbar>

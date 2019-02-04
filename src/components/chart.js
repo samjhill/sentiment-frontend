@@ -6,7 +6,6 @@ import './chart.css';
 export default class Chart extends Component {
 	constructor(props){
 		super(props);
-
 		this.state = {
 			colors: [
 				'#e6194b',
@@ -30,9 +29,11 @@ export default class Chart extends Component {
 
 	render() {
 		var labels = [];
+		if(!this.props.data) {
+			return null;
+		}
 		if(this.props.data.length > 0) {
 				this.props.data.map(datum => {
-						delete datum[this.props.sortBy];
 						const keys = Object.keys(datum);
 						keys.map(keyName => {
 							if (labels.indexOf(keyName) === -1) {
@@ -64,7 +65,7 @@ export default class Chart extends Component {
 								return (<Line dot={false} type="monotone" key={index} dataKey={label} stroke={this.state.colors[index]} />)
 							})
 						}
-						<XAxis dataKey={this.props.sortBy || 'date'} />
+						<XAxis ticks={this.props.ticks} dataKey={this.props.sortBy || 'date'} />
 						<YAxis label={this.props.yAxisLabel}/>
 						<Tooltip/>
 			     <Legend />
