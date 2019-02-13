@@ -8,9 +8,9 @@ export default class CustomBarChart extends Component {
 		super(props);
 		this.state = {
 			colors: [
+        '#ffe119',
+        '#3cb44b',
 				'#e6194b',
-				'#3cb44b',
-				'#ffe119',
 				'#0082c8',
 				'#f58231',
 				'#911eb4',
