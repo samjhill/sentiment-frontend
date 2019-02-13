@@ -4,6 +4,7 @@ import axios from 'axios';
 import logo from '../logo.svg';
 import Ticker from '../components/ticker';
 import Chart from '../components/chart';
+import BarChart from '../components/barChart';
 import AreaChart from '../components/areaChart';
 import Comments from '../components/comments';
 import Slider from 'react-slick';
@@ -54,7 +55,7 @@ export default class Home extends Component {
       trends: [],
       news: {},
       comments: [],
-      deltas: {},
+      deltas: [],
       timeFrame,
       settings: null,
     };
@@ -125,7 +126,14 @@ export default class Home extends Component {
 
     axios.get(this.url + "/sentiment/deltas")
           .then(json => {
-            const deltas = json.data;
+            const deltas = Object.keys(json.data).map(subName => {
+              const data = json.data[subName];
+              return {
+                  name: subName,
+                  average: data.avgScore,
+                  current: data.currentScore
+              }
+            });
 
             this.setState({deltas: deltas});
           }).catch(ex => {
@@ -231,7 +239,7 @@ export default class Home extends Component {
 
           {settings.showDeltas.value && (
             <StyledSection>
-              <Delta title="At a Glance" deltas={deltas} tooltip="" />
+              <BarChart title="At a Glance" data={deltas} tooltip="How is reddit feeling right now?" sortBy='name' />
             </StyledSection>
           )}
 
