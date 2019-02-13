@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ReferenceLine } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ReferenceLine, Label } from 'recharts';
 import SimpleTooltip from "react-simple-tooltip";
 import './chart.css';
 
@@ -66,8 +66,11 @@ export default class CustomBarChart extends Component {
 							})
 						}
             <ReferenceLine y={0} stroke='#000'/>
-						<XAxis ticks={this.props.ticks} dataKey={this.props.sortBy || 'date'} />
-						<YAxis label={this.props.yAxisLabel}/>
+						<XAxis ticks={this.props.ticks} dataKey={this.props.sortBy || 'date'}>
+              <Label value={this.props.xAxisLabel} offset={40} position="insideBottom" />
+            </XAxis>
+						<YAxis label={{ value: this.props.yAxisLabel, angle: -90, position: 'insideLeft' }}>
+            </YAxis>
 			     <Legend />
 	      </BarChart>
 			</div>

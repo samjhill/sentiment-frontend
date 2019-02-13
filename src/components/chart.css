@@ -28,5 +28,6 @@
 }
 
 .recharts-label tspan {
-  color: white !important;
+  fill: darkGrey !important;
+  font-size: 2rem;
 }

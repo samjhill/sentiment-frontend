@@ -239,7 +239,7 @@ export default class Home extends Component {
 
           {settings.showDeltas.value && (
             <StyledSection>
-              <BarChart title="At a Glance" data={deltas} tooltip="How is reddit feeling right now?" sortBy='name' />
+              <BarChart title="At a Glance" xAxisLabel={'Subreddit Name'} yAxisLabel={'Sentiment Level'} data={deltas} tooltip="How is reddit feeling right now?" sortBy='name' />
             </StyledSection>
           )}
 
