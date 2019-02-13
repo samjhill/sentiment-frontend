@@ -18,15 +18,24 @@ jobs:
 
     steps:
       - checkout
-
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
       - run:
          name: Install Dependencies
          command: yarn install
-
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run:
            name: Build Static Site
            command: CI=false yarn run build
 
       - run:
           name: SCP build files to Droplet
-          command: scp -r -o StrictHostKeyChecking=no ~/repo/build/. $DROPLET_USER@$DROPLET_IP:~/sentiment/frontend/build/.
+          command: |
+            sudo apt install rsync -y
+            rsync -r -e "ssh -o StrictHostKeyChecking=no" ~/repo/build/. $DROPLET_USER@$DROPLET_IP:~/sentiment/frontend/build/.
